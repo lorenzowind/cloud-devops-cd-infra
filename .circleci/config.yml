@@ -1,7 +1,6 @@
 version: 2.1
 
 orbs:
-  # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
 
 jobs:
@@ -31,8 +30,10 @@ jobs:
           command: ansible-playbook -i inventory main.yml
 
 workflows:
-  my_workflow:
+  welcome:
     jobs:
-      - welcome
-      # - create_infrastructure
-      # - configure_infrastructure
+      - welcome/run
+  # workflow:
+  #   jobs:
+  #     - create_infrastructure
+  #     - configure_infrastructure
