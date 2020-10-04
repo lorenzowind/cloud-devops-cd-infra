@@ -28,12 +28,28 @@ jobs:
       - run:
           name: Configure server
           command: ansible-playbook -i inventory main.yml
+  smoke_test:
+      docker:
+        - image: alpine:latest
+      steps:
+        - run: apk add --update curl
+        - run:
+            name: smoke test.
+            command: |
+              URL="https://www.google.com"
+              if curl -s --head ${URL}
+              then
+               return 0
+              else
+               return 1
+              fi
 
 workflows:
-  welcome:
-    jobs:
-      - welcome/run
-  # workflow:
+  # welcome:
   #   jobs:
-  #     - create_infrastructure
-  #     - configure_infrastructure
+  #     - welcome/run
+  workflow:
+    jobs:
+      # - create_infrastructure
+      # - configure_infrastructure
+      - smoke_test
